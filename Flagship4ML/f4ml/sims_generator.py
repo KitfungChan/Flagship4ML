@@ -351,9 +351,6 @@ class CreateSimulatedImages:
 
         gal = gal_bulge + gal_disk
 
-        if self.add_poisson:
-            gal = np.random.poisson(gal)
-
         if self.add_constant_background:
             bkg = (
                 np.random.uniform(1, 3)
@@ -363,7 +360,6 @@ class CreateSimulatedImages:
                     (self.crop_size * self.resolution, self.crop_size * self.resolution)
                 )
             )
-            bkg = np.random.poisson(bkg)
             gal += bkg
 
         if self.add_psf:
@@ -380,6 +376,9 @@ class CreateSimulatedImages:
             psf_grid = moff(self.psf_xgrid, self.psf_ygrid)
             gal = fftconvolve(gal, psf_grid, mode="same")
 
+        if self.add_poisson:
+            gal = np.random.poisson(gal)
+        
         gal = block_reduce(gal, (self.resolution, self.resolution), np.mean)
         gal /= self.exp_time[ib]
 
