@@ -38,7 +38,7 @@ class CreateSimulatedImages:
     num_exposures: int = 3
     use_dask: bool = False
     calibrate_flux: bool = True
-    GAIN = 0.71
+    GAIN: float = 0.71
     output_dir: Path = Path("/data/astro/scratch2/lcabayol/NFphotoz/data/CHFT_sims")
 
     def __post_init__(self):
